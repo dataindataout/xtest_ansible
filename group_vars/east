@@ -1,0 +1,6 @@
+placement_cloud: gcp
+placement_region: us-east1
+catalog: 127.0.0.1:7100,127.0.0.2:7100,127.0.0.3:7100
+xcluster_peer_catalog: 127.0.0.4:7100,127.0.0.5:7100,127.0.0.6:7100
+replication: 3
+placement_info: "{{ placement_cloud }}.{{ placement_region }}.{{ placement_region }}-a,{{ placement_cloud }}.{{ placement_region }}.{{ placement_region }}-b,{{ placement_cloud }}.{{ placement_region }}.{{ placement_region }}-c"

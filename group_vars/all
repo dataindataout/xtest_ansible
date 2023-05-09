@@ -1,0 +1,5 @@
+executable_dir: /Users/vparham/Dropbox/Code_from_macair/_notmine/yugabyte-2.16.2.0/bin
+missed_heartbeat_periods: 10
+num_shards_per_tserver: 1
+ysql_port: 5433
+ycql_port: 9042

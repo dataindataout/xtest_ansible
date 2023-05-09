@@ -1,0 +1,12 @@
+- name: Ensure placement info on east nodes
+  hosts: east-node1
+  tasks:
+    - name: Set up placement info
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} modify_placement_info {{ placement_info }} {{ replication }}"
+
+- name: Ensure placement info on east nodes
+  hosts: west-node1
+  tasks:
+    - name: Set up placement info
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} modify_placement_info {{ placement_info }} {{ replication }}"
+

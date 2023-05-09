@@ -1,0 +1,55 @@
+- name: Get cluster UUID on east side
+  hosts: east-node1
+  tasks:
+    - name: Get and set eastid
+      ansible.builtin.shell: curl -s http://{{ ansible_host }}:7000/cluster-config | grep cluster_uuid | awk -F '"' '{print $2}'
+      register: eastid
+    - name: Print value for set variable
+      ansible.builtin.debug:
+        var: eastid.stdout
+
+- name: Get cluster UUID on west side
+  hosts: west-node1
+  tasks:
+    - name: Get and set westid
+      ansible.builtin.shell: curl -s http://{{ ansible_host }}:7000/cluster-config | grep cluster_uuid | awk -F '"' '{print $2}'
+      register: westid
+    - name: Print value for set variable
+      ansible.builtin.debug:
+        var: westid.stdout
+
+- name: Get table UUID on east side
+  hosts: east-node1
+  tasks:
+    - name: Get and set tableid
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
+      register: tableid
+    - name: Print value for set variable
+      ansible.builtin.debug:
+        var: tableid.stdout
+
+- name: Get table UUID on west side
+  hosts: west-node1
+  tasks:
+    - name: Get and set tableid
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
+      register: tableid
+    - name: Print value for set variable
+      ansible.builtin.debug:
+        var: tableid.stdout
+
+- name: Set replication to east side
+  hosts: west-node1
+  vars:
+    replication_name: milliontable
+  tasks:
+    - name: Set unidirectional replication from west to east
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} setup_universe_replication {{ westid.stdout }}_{{ replication_name }} {{ xcluster_peer_catalog }} {{ tableid.stdout }}"
+
+- name: Set replication to west side
+  hosts: east-node1
+  vars:
+    replication_name: milliontable
+  tasks:
+    - name: Set unidirectional replication from east to west
+      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} setup_universe_replication {{ eastid.stdout }}_{{ replication_name }} {{ xcluster_peer_catalog }} {{ tableid.stdout }}"

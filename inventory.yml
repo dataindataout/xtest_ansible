@@ -1,0 +1,33 @@
+east:
+  hosts:
+    east-node1:
+      ansible_host: 127.0.0.1
+      instance_number: 1
+      placement_zone: us-east1-a
+    east-node2:
+      ansible_host: 127.0.0.2
+      instance_number: 2
+      placement_zone: us-east1-b
+    east-node3:
+      ansible_host: 127.0.0.3
+      instance_number: 3
+      placement_zone: us-east1-c
+west:
+  hosts:
+    west-node1:
+      ansible_host: 127.0.0.4
+      instance_number: 4
+      placement_zone: us-west1-a
+    west-node2:
+      ansible_host: 127.0.0.5
+      instance_number: 5
+      placement_zone: us-west1-b
+    west-node3:
+      ansible_host: 127.0.0.6
+      instance_number: 6
+      placement_zone: us-west1-c
+
+xcluster:
+  children:
+    east:
+    west:

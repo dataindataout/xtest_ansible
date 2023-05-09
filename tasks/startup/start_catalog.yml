@@ -1,0 +1,16 @@
+- name: Create config files
+  hosts: xcluster
+  tasks:
+    - name: Create a config file for each catalog host
+      ansible.builtin.template:
+        src: "catalog.conf.j2"
+        dest: "/tmp/data{{ instance_number }}/catalog.conf"
+        owner: vparham
+        group: staff
+        mode: "0644"
+
+- name: Start catalog servers
+  hosts: xcluster
+  tasks:
+    - name: Start catalog server on each host
+      ansible.builtin.shell: "nohup {{ executable_dir }}/yb-master --flagfile=/tmp/data{{ instance_number }}/catalog.conf 2>&1  &"
