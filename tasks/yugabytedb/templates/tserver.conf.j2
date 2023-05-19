@@ -1,0 +1,11 @@
+--tserver_master_addrs={{ yb_catalog }}
+--rpc_bind_addresses={{ ansible_host }}
+--enable_ysql=true
+--pgsql_proxy_bind_address={{ ansible_host }}:{{ yb_ysql_port }}
+--cql_proxy_bind_address={{ ansible_host }}:{{ yb_ycql_port }}
+--fs_data_dirs=/tmp/data{{ instance_number }}
+--placement_cloud={{ yb_placement_cloud }}
+--placement_region={{ yb_placement_region }}
+--placement_zone={{ yb_placement_zone }}
+--leader_failure_max_missed_heartbeat_periods={{ yb_missed_heartbeat_periods }}
+--ysql_num_shards_per_tserver={{ yb_num_shards_per_tserver }}

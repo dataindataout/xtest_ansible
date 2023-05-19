@@ -1,0 +1,15 @@
+- name: Ensure the data set from the Museum of Modern Art is present
+  hosts: east-node1
+  tasks:
+    - name: Download artists data
+      ansible.builtin.get_url:
+        url: https://github.com/MuseumofModernArt/collection/raw/master/Artists.csv
+        dest: /tmp/Artists.csv
+        mode: "0775"
+
+- name: Ensure MOMA artists table is populated
+  hosts: east-node1
+  tasks:
+    - name: Populate table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "copy artists from '/tmp/artists.csv' delimiter ',' csv header"

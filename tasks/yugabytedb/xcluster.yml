@@ -22,7 +22,7 @@
   hosts: east-node1
   tasks:
     - name: Get and set tableid
-      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
+      ansible.builtin.shell: "{{ yb_executable_dir }}/yb-admin --master_addresses {{ yb_catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
       register: tableid
     - name: Print value for set variable
       ansible.builtin.debug:
@@ -32,7 +32,7 @@
   hosts: west-node1
   tasks:
     - name: Get and set tableid
-      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
+      ansible.builtin.shell: "{{ yb_executable_dir }}/yb-admin --master_addresses {{ yb_catalog }} list_tables include_table_id | grep milliontable | awk -F ' ' '{print $2}'"
       register: tableid
     - name: Print value for set variable
       ansible.builtin.debug:
@@ -41,15 +41,15 @@
 - name: Set replication to east side
   hosts: west-node1
   vars:
-    replication_name: milliontable
+    yb_replication_name: milliontable
   tasks:
     - name: Set unidirectional replication from west to east
-      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} setup_universe_replication {{ westid.stdout }}_{{ replication_name }} {{ xcluster_peer_catalog }} {{ tableid.stdout }}"
+      ansible.builtin.command: "{{ yb_executable_dir }}/yb-admin --master_addresses {{ yb_catalog }} setup_universe_replication {{ westid.stdout }}_{{ yb_replication_name }} {{ yb_xcluster_peer_catalog }} {{ tableid.stdout }}"
 
 - name: Set replication to west side
   hosts: east-node1
   vars:
-    replication_name: milliontable
+    yb_replication_name: milliontable
   tasks:
     - name: Set unidirectional replication from east to west
-      ansible.builtin.shell: "{{ executable_dir }}/yb-admin --master_addresses {{ catalog }} setup_universe_replication {{ eastid.stdout }}_{{ replication_name }} {{ xcluster_peer_catalog }} {{ tableid.stdout }}"
+      ansible.builtin.command: "{{ yb_executable_dir }}/yb-admin --master_addresses {{ yb_catalog }} setup_universe_replication {{ eastid.stdout }}_{{ yb_replication_name }} {{ yb_xcluster_peer_catalog }} {{ tableid.stdout }}"

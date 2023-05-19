@@ -1,5 +1,5 @@
-- name: Create config files
-  hosts: xcluster
+- name: Ensure config files are created
+  hosts: east
   tasks:
     - name: Create a config file for each catalog host
       ansible.builtin.template:
@@ -9,8 +9,8 @@
         group: staff
         mode: "0644"
 
-- name: Start catalog servers
-  hosts: xcluster
+- name: Ensure catalog servers are started
+  hosts: east
   tasks:
     - name: Start catalog server on each host
-      ansible.builtin.shell: "nohup {{ executable_dir }}/yb-master --flagfile=/tmp/data{{ instance_number }}/catalog.conf 2>&1  &"
+      ansible.builtin.shell: "nohup {{ yb_executable_dir }}/yb-master --flagfile=/tmp/data{{ instance_number }}/catalog.conf 2>&1  &"

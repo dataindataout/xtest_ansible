@@ -1,0 +1,6 @@
+- name: Ensure million table is populated
+  hosts: east-node1
+  tasks:
+    - name: Populate table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "insert into milliontable (name, age) select substr(md5(random()::text), 1, 10), (random() * 70 + 10)::integer from generate_series(1, 1000000)"

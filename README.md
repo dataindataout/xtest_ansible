@@ -7,4 +7,5 @@
 
 # run
 
-- tasks/main.yml
+- tasks/million.yml provides an xcluster setup with a table with a million rows
+- tasks/fuzzy.yml provides a single cluster (3 nodes) with a table of artists to test fuzzy matching

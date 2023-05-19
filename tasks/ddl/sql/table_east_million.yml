@@ -1,0 +1,15 @@
+- name: Check that database is running
+  hosts: east-node1
+  tasks:
+    - name: Check for output from database
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'select version()'"
+      register: dbversion
+      until: "dbversion is not failed"
+      retries: 10
+      delay: 1
+
+- name: Ensure table on east
+  hosts: east-node1
+  tasks:
+    - name: Create table
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create table if not exists milliontable(name varchar(10), age integer)'"

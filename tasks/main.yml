@@ -1,5 +1,0 @@
-- import_playbook: provisioning/create_datadirs.yml
-- import_playbook: startup/start_catalog.yml
-- import_playbook: startup/start_tservers.yml
-- import_playbook: ddl/sql/create_table.yml
-- import_playbook: startup/start_xcluster.yml

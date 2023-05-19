@@ -1,5 +1,5 @@
-- name: Create config files
-  hosts: xcluster
+- name: Ensure config files are created
+  hosts: east
   tasks:
     - name: Create a config file for each tserver host
       ansible.builtin.template:
@@ -9,8 +9,8 @@
         group: staff
         mode: "0644"
 
-- name: Start tablet servers
-  hosts: xcluster
+- name: Ensure tablet servers are started
+  hosts: east
   tasks:
     - name: Start tablet server on each host
-      ansible.builtin.shell: "nohup {{ executable_dir }}/yb-tserver --flagfile=/tmp/data{{ instance_number }}/tserver.conf 2>&1  &"
+      ansible.builtin.shell: "nohup {{ yb_executable_dir }}/yb-tserver --flagfile=/tmp/data{{ instance_number }}/tserver.conf 2>&1  &"

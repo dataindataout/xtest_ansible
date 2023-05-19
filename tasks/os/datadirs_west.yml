@@ -1,10 +1,10 @@
-- name: Create data dirs
-  hosts: xcluster
-  tasks: 
+- name: Ensure data dirs
+  hosts: west
+  tasks:
     - name: Create a directory for each host
       ansible.builtin.file:
         path: "/tmp/data{{ instance_number }}"
         state: directory
         owner: "vparham"
         group: "staff"
-        mode: '0750'
+        mode: "0750"

@@ -1,0 +1,29 @@
+- name: Ensure data directories on the east side
+  ansible.builtin.import_playbook: os/datadirs_east.yml
+
+- name: Ensure data directories on the west side
+  ansible.builtin.import_playbook: os/datadirs_west.yml
+
+- name: Ensure catalog servers are started on the east
+  ansible.builtin.import_playbook: yugabytedb/catalog_east.yml
+
+- name: Ensure catalog servers are started on the west
+  ansible.builtin.import_playbook: yugabytedb/catalog_west.yml
+
+- name: Ensure tablet servers are started on the east
+  ansible.builtin.import_playbook: yugabytedb/tservers_east.yml
+
+- name: Ensure tablet servers are started on the west
+  ansible.builtin.import_playbook: yugabytedb/tservers_west.yml
+
+- name: Ensure million table is created on the east side
+  ansible.builtin.import_playbook: ddl/sql/table_east_million.yml
+
+- name: Ensure million table is created on the west side
+  ansible.builtin.import_playbook: ddl/sql/table_west_million.yml
+
+- name: Ensure xcluster is setup between east and west
+  ansible.builtin.import_playbook: yugabytedb/xcluster.yml
+
+- name: Ensure data for million table
+  ansible.builtin.import_playbook: dml/data_million.yml
