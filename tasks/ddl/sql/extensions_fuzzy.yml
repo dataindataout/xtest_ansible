@@ -1,0 +1,17 @@
+- name: Check that database is running
+  hosts: east-node1
+  tasks:
+    - name: Check for output from database
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'select version()'"
+      register: dbversion
+      until: "dbversion is not failed"
+      retries: 10
+      delay: 1
+
+- name: Ensure extensions are installed
+  hosts: east-node1
+  tasks:
+    - name: Create fuzzystrmatch extension
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create extension if not exists fuzzystrmatch'"
+    - name: Create pg_trgm trigram extension
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create extension if not exists pg_trgm'"

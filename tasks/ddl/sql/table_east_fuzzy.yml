@@ -12,4 +12,4 @@
   hosts: east-node1
   tasks:
     - name: Create table
-      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create table if not exists artists (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text)'"
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create table if not exists artists (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text, primary key(artist_id))'"

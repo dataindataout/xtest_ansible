@@ -10,6 +10,9 @@
 - name: Ensure MOMA artists table is populated
   hosts: east-node1
   tasks:
-    - name: Populate table
+    - name: Truncate existing table to avoid duplicates
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "truncate table artists"
+    - name: Copy csv to temp table
       ansible.builtin.command: >
         {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "copy artists from '/tmp/artists.csv' delimiter ',' csv header"

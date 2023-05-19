@@ -15,3 +15,6 @@
 
 - name: Ensure data for the fuzzy matching demo
   ansible.builtin.import_playbook: dml/data_fuzzy.yml
+
+- name: Ensure extensions are installed for the fuzzy matching demo
+  ansible.builtin.import_playbook: ddl/sql/extensions_fuzzy.yml
