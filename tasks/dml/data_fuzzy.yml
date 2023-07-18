@@ -3,16 +3,31 @@
   tasks:
     - name: Download artists data
       ansible.builtin.get_url:
-        url: https://github.com/MuseumofModernArt/collection/raw/master/Artists.csv
-        dest: /tmp/Artists.csv
+        url: https://media.githubusercontent.com/media/MuseumofModernArt/collection/master/Artists.csv
+        dest: /tmp/artists.csv
+        mode: "0775"
+    - name: Download artwork data
+      ansible.builtin.get_url:
+        url: https://media.githubusercontent.com/media/MuseumofModernArt/collection/master/Artworks.csv
+        dest: /tmp/artwork.csv
         mode: "0775"
 
 - name: Ensure MOMA artists table is populated
   hosts: east-node1
   tasks:
-    - name: Truncate existing table to avoid duplicates
+    - name: Truncate existing artists table to avoid duplicates
       ansible.builtin.command: >
-        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "truncate table artists"
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb -c "truncate table artists"
     - name: Copy csv to temp table
       ansible.builtin.command: >
-        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c "copy artists from '/tmp/artists.csv' delimiter ',' csv header"
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb -c "copy artists from '/tmp/artists.csv' delimiter ',' csv header"
+
+- name: Ensure MOMA artwork table is populated
+  hosts: east-node1
+  tasks:
+    - name: Truncate existing artwork table to avoid duplicates
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb -c "truncate table artwork"
+    - name: Copy csv to temp table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb -c "copy artwork from '/tmp/artwork.csv' delimiter ',' csv header"
