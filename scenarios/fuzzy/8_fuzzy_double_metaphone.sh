@@ -10,4 +10,4 @@
 
 ysqlsh -h 127.0.0.1 -ec "select dmetaphone('Jon Verdoo')"
 
-ysqlsh -h 127.0.0.1 -ec "select name from artists where dmetaphone(name) = dmetaphone('Jon Verdoo')"
+ysqlsh -h 127.0.0.1 -ec "select name, dmetaphone(name) from artists where dmetaphone(name) = dmetaphone('Jon Verdoo')"

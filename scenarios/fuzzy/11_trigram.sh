@@ -13,6 +13,8 @@
 
 ysqlsh -h 127.0.0.1 -ec "select show_trgm('Jon Verdoo')"
 
+ysqlsh -h 127.0.0.1 -ec "select show_trgm('Jean Verdoux')"
+
 ysqlsh -h 127.0.0.1 -ec "select word_similarity('Jeanne Verdoux','Jon Verdoo')"
 
 ysqlsh -h 127.0.0.1 -ec "select name from artists where similarity(name, 'Jon Verdoo') > 0.3"

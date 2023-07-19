@@ -14,5 +14,4 @@ SELECT
   artists.name
 FROM artists, q
 WHERE dmetaphone(name) = dmetaphone(qsn)
-ORDER BY similarity_score DESC
-LIMIT 1"
+ORDER BY similarity_score DESC"

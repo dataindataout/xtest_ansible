@@ -11,11 +11,11 @@
 # also helps find the name if I’ve incorrectly guessed the spelling.
 
 ysqlsh -h 127.0.0.1 -ec "WITH q AS (
-  SELECT 'Jean' AS qsn
+  SELECT 'Jan' AS qsn
 )
 SELECT
   levenshtein(lower(substring(name from '[^ ]+'::text)),lower(qsn)) AS leven,
   artists.name
 FROM artists, q
-WHERE levenshtein(lower(substring(name from '[^ ]+'::text)),lower(qsn)) < 3
-ORDER BY leven"
+WHERE levenshtein(lower(substring(name from '[^ ]+'::text)),lower(qsn)) < 4
+ORDER BY leven, name"
