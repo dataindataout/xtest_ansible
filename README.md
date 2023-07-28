@@ -1,6 +1,8 @@
 # xtest_ansible
 
-This repo is meant to act as a local test and demo environment.
+This repo is meant to act as a local test and demo environment for open source databases.
+
+Please note that while some of the snippets within may be useful in a production environment, this code is meant to be used for demos and experiments, and is not intended to be optimized for high load or scale.
 
 Ansible is used to provision database clusters. Current available options are:
 

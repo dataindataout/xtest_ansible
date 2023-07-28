@@ -84,9 +84,11 @@ for i in "${table_list[@]}"
 do
   for j in {1..3}
   do
-    mkdir -p $backup_location/$i/data$j/
-    cp -r /tmp/data$j/yb-data/tserver/data/rocksdb/table-$i/tablet-*.snapshots/$snapshot_id/ $backup_location/$i/data$j/
+    mkdir -p $backup_location/data$j/yb-data/tserver/data/rocksdb/table-$i/
+    cp -R /tmp/data$j/yb-data/tserver/data/rocksdb/table-$i/tablet-*.snapshots \
+	    $backup_location/data$j/yb-data/tserver/data/rocksdb/table-$i/
   done
 done
 
 echo "Completed backup process successfully"
+echo "Your backup is in $backup_location"
