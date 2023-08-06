@@ -1,0 +1,12 @@
+- name: Start Postgres
+  hosts: pg1
+  tasks:
+    - name: Find out if pg has been initialized
+      ansible.builtin.stat:
+        path: "/opt/homebrew/var/postgresql@14/pg_hba.conf"
+      register: postgres_data
+    - name: Initialize PostgreSQL if needed
+      shell: "{{ pg_executable_dir }}/pg_ctl initdb --pgdata=/opt/homebrew/var/postgresql@14"
+      when: not postgres_data.stat.exists
+    - name: Restart postgres
+      shell: "{{ pg_executable_dir }}/pg_ctl restart --pgdata=/opt/homebrew/var/postgresql@14 --log=/opt/homebrew/var/postgresql@14/server.log"

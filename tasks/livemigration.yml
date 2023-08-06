@@ -1,0 +1,11 @@
+- name: Ensure Postgres is installed
+  ansible.builtin.import_playbook: postgres/postgres_install.yml
+
+- name: Ensure postgres is started
+  ansible.builtin.import_playbook: postgres/postgres_start.yml
+
+- name: Ensure database assets are created
+  ansible.builtin.import_playbook: postgres/postgres_create.yml
+
+- name: Ensure data is loaded
+  ansible.builtin.import_playbook: postgres/postgres_populate.yml

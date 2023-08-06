@@ -1,0 +1,11 @@
+- name: Populate data on postgres instance
+  hosts: pg1
+  tasks:
+    - name: Load sql script
+      community.postgresql.postgresql_query:
+        login_user: "{{ ansible_user_id }}"
+        db: "{{ db_name }}"
+        query:
+          - create table if not exists milliontable(name varchar(10), age integer)
+          - truncate table milliontable
+          - insert into milliontable (name, age) select substr(md5(random()::text), 1, 10), (random() * 70 + 10)::integer from generate_series(1, 1000000)

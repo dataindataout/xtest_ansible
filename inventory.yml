@@ -26,6 +26,10 @@ west:
       ansible_host: 127.0.0.6
       instance_number: 6
       yb_placement_zone: us-west1-c
+pg:
+  hosts:
+    pg1:
+      ansible_host: 127.0.0.7
 
 xcluster:
   children:

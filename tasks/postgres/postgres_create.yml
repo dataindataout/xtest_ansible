@@ -1,0 +1,39 @@
+- name: Create postgres assets
+  hosts: pg1
+  tasks:
+    - name: "Create app database"
+      postgresql_db:
+        state: present
+        login_user: "{{ ansible_user_id }}"
+        db: postgres
+        name: "{{ db_name }}"
+
+    - name: "Create db user"
+      postgresql_user:
+        state: present
+        login_user: "{{ ansible_user_id }}"
+        db: postgres
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+
+    - name: "Grant db user access to app db"
+      postgresql_privs:
+        login_user: "{{ ansible_user_id }}"
+        db: postgres
+        type: database
+        database: "{{ db_name }}"
+        roles: "{{ db_user }}"
+        grant_option: no
+        privs: all
+
+    - name: "Allow md5 connection for the db user"
+      postgresql_pg_hba:
+        dest: "/opt/homebrew/var/postgresql@14/pg_hba.conf"
+        contype: host
+        databases: all
+        method: md5
+        users: "{{ db_user }}"
+        create: true
+
+    - name: Restart postgres
+      shell: "{{ pg_executable_dir }}/pg_ctl restart --pgdata=/opt/homebrew/var/postgresql@14 --log=/opt/homebrew/var/postgresql@14/server.log"

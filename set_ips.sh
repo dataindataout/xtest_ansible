@@ -5,3 +5,4 @@ sudo ifconfig lo0 alias 127.0.0.5
 sudo ifconfig lo0 alias 127.0.0.6
 sudo ifconfig lo0 alias 127.0.0.7
 sudo ifconfig lo0 alias 127.0.0.8
+sudo ifconfig lo0 alias 127.0.0.9

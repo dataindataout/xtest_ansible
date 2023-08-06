@@ -1,0 +1,4 @@
+pg_executable_dir: /opt/homebrew/bin
+db_user: postgresuser
+db_password: postgrespw
+db_name: db1

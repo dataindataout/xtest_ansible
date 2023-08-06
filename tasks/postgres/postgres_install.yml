@@ -1,0 +1,12 @@
+- name: Ensure Postgres 14 and dependencies are installed
+  hosts: pg1
+  tasks:
+    - name: Install postgres via homebrew
+      community.general.homebrew:
+        name: postgresql@14
+        path: /opt/homebrew/bin
+        state: present
+    - name: Install psycopg2
+      pip:
+        name: psycopg2-binary
+        state: present
