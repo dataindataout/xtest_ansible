@@ -1,0 +1,13 @@
+- name: Ensure the data set from the Museum of Modern Art is present
+  hosts: east-node1
+  tasks:
+    - name: Download artists data
+      ansible.builtin.get_url:
+        url: https://media.githubusercontent.com/media/MuseumofModernArt/collection/master/Artists.csv
+        dest: /tmp/artists.csv
+        mode: "0775"
+    - name: Download artwork data
+      ansible.builtin.get_url:
+        url: https://media.githubusercontent.com/media/MuseumofModernArt/collection/master/Artworks.csv
+        dest: /tmp/artwork.csv
+        mode: "0775"

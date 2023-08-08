@@ -1,0 +1,19 @@
+- name: Ensure MOMA artists table is populated
+  hosts: east-node1
+  tasks:
+    - name: Truncate existing artists table to avoid duplicates
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb_sql -c "truncate table artists_sql"
+    - name: Copy csv to temp table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb_sql -c "copy artists_sql from '/tmp/artists.csv' delimiter ',' csv header"
+
+- name: Ensure MOMA artwork table is populated
+  hosts: east-node1
+  tasks:
+    - name: Truncate existing artwork table to avoid duplicates
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb_sql -c "truncate table artwork_sql"
+    - name: Copy csv to temp table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d fuzzydb_sql -c "copy artwork_sql from '/tmp/artwork.csv' delimiter ',' csv header"

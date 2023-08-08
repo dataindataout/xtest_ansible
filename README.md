@@ -36,3 +36,4 @@ Please feel free to open an issue if you have a scenario request.
 - use set_ips.sh to set local ips for 6 nodes via set_ips.sh (127.0.01 - 127.0.0.6)
 - add public ssh key to ~/.ssh/authorized_users file and ssh-add it
 - some of the scenarios assume you've upgraded your bash version to something modern (e.g., 5.2.15)
+- download and install dsbulk: <https://github.com/yugabyte/dsbulk>
