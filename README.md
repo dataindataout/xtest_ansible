@@ -4,13 +4,18 @@ This repo is meant to act as a local test and demo environment for open source d
 
 Please note that while some of the snippets within may be useful in a production environment, this code is meant to be used for demos and experiments, and is not intended to be optimized for high load or scale.
 
+## Local provisioning
+
 Ansible is used to provision database clusters. Current available options are:
 
-- YugabyteDB 3-node cluster (fuzzy) with two tables (artists and artwork) from the MoMA data set
+- YugabyteDB 3-node cluster (moma) with two tables (artists and artwork) from the MoMA data set
 - YugabyteDB 3-node x 2 xcluster (million) with a million-row generated table
+- PostgreSQL single instance using a million-row generated table
 
 An example command for provisioning a test cluster is:
-`ansible-playbook -i inventory.yml tasks/fuzzy.yml`
+`ansible-playbook -i inventory.yml tasks/moma.yml`
+
+## Scenarios
 
 After the cluster is running, various scenarios can be run. Current available scenarios are:
 
@@ -28,7 +33,7 @@ scenarios/3_wildcard.sh
 
 Please feel free to open an issue if you have a scenario request.
 
-## prerequisites
+## Prerequisites
 
 - a copy of yugabytedb (see <https://download.yugabyte.com> for one option)
 - set the group_vars yb_executable_dir to point to your desired YugabyteDB version
