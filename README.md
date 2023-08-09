@@ -42,3 +42,7 @@ Please feel free to open an issue if you have a scenario request.
 - add public ssh key to ~/.ssh/authorized_users file and ssh-add it
 - some of the scenarios assume you've upgraded your bash version to something modern (e.g., 5.2.15)
 - download and install dsbulk: <https://github.com/yugabyte/dsbulk>
+
+## Customization
+
+If you need to change gflags for YugabyteDB, add the key/value in groups_vars/all and then in the template at tasks/yugabytedb/templates/[tserver.conf.j2|catalog.conf.j2].

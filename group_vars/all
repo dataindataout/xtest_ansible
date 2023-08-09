@@ -4,3 +4,4 @@ yb_missed_heartbeat_periods: 10
 yb_num_shards_per_tserver: 1
 yb_ysql_port: 5433
 yb_ycql_port: 9042
+yb_log_min_duration_statement: 500

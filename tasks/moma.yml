@@ -10,17 +10,20 @@
 - name: Ensure the placement policy
   ansible.builtin.import_playbook: os/placement_east.yml
 
-- name: Ensure the sql table for the fuzzy matching demo
+- name: Ensure the sql table is created
   ansible.builtin.import_playbook: ddl/sql/stretch/moma.yml
 
-- name: Ensure the cql table for the fuzzy matching demo
+- name: Ensure the cql table is created
   ansible.builtin.import_playbook: ddl/cql/stretch/moma.yml
 
-- name: Ensure data set is available
+- name: Ensure MOMA data set is available
   ansible.builtin.import_playbook: dml/datasets/moma.yml
 
-- name: Ensure sql data for the fuzzy matching demo
+- name: Ensure sql data is imported
   ansible.builtin.import_playbook: dml/sql/moma.yml
 
-- name: Ensure cql data for the fuzzy matching demo
+- name: Ensure cql data is imported
   ansible.builtin.import_playbook: dml/cql/moma.yml
+
+- name: Ensure slow query tracking extensions are installed
+  ansible.builtin.import_playbook: ddl/sql/extensions_slow_queries.yml
