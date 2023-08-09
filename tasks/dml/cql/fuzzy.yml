@@ -1,9 +1,0 @@
-- name: Ensure MOMA artists table is populated in cql
-  hosts: east-node1
-  tasks:
-    - name: Truncate existing artists table to avoid duplicates
-      ansible.builtin.command: >
-        {{ yb_executable_dir }}/ycqlsh -h {{ ansible_host }} -k fuzzydb_cql -e "truncate table artists_cql"
-    - name: Copy csv to temp table
-      ansible.builtin.command: >
-        {{ dsbulk_executable_dir }}/dsbulk load -h 127.0.0.1 -port 9042 -k fuzzydb_cql -t artists_cql -url '/tmp/artists.csv' -delim ',' -m "0=artist_id,1=name,2=extra1,3=nationality,4=gender,5=birth_year,6=death_year,7=extra2,8=extra3"

@@ -11,19 +11,16 @@
   ansible.builtin.import_playbook: os/placement_east.yml
 
 - name: Ensure the sql table for the fuzzy matching demo
-  ansible.builtin.import_playbook: ddl/sql/stretch/fuzzy.yml
+  ansible.builtin.import_playbook: ddl/sql/stretch/moma.yml
 
 - name: Ensure the cql table for the fuzzy matching demo
-  ansible.builtin.import_playbook: ddl/cql/stretch/fuzzy.yml
+  ansible.builtin.import_playbook: ddl/cql/stretch/moma.yml
 
 - name: Ensure data set is available
   ansible.builtin.import_playbook: dml/datasets/moma.yml
 
 - name: Ensure sql data for the fuzzy matching demo
-  ansible.builtin.import_playbook: dml/sql/fuzzy.yml
+  ansible.builtin.import_playbook: dml/sql/moma.yml
 
 - name: Ensure cql data for the fuzzy matching demo
-  ansible.builtin.import_playbook: dml/cql/fuzzy.yml
-
-- name: Ensure extensions are installed for the fuzzy matching demo
-  ansible.builtin.import_playbook: ddl/sql/extensions_fuzzy.yml
+  ansible.builtin.import_playbook: dml/cql/moma.yml

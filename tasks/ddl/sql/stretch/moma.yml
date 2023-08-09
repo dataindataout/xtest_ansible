@@ -1,0 +1,24 @@
+- name: Check that database is running
+  hosts: east-node1
+  tasks:
+    - name: Check for output from database
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'select version()'"
+      register: dbversion
+      until: "dbversion is not failed"
+      retries: 10
+      delay: 1
+
+- name: Ensure database on east
+  hosts: east-node1
+  tasks:
+    - name: Create table
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create database moma_sql'"
+
+- name: Ensure tables on east
+  hosts: east-node1
+  tasks:
+    - name: Create artists table
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d moma_sql -c 'create table if not exists artists_sql (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text, primary key(artist_id))'"
+
+    - name: Create artwork table
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d moma_sql -c 'create table if not exists artwork_sql (title text, artist text, constituentid text, artistbio text, nationality text, begindate text, enddate text, gender text, artworkdate text, medium text, dimensions text, creditline text, accessionnumber text, classification text, department text, dateacquired date, cataloged text, objectid int, url text, thumbnailurl text, circumferencecm decimal, depthcm decimal, diametercm decimal, heightcm decimal, lengthcm decimal, weightkg decimal, widthcm decimal, seatheightcm decimal, durationsec decimal, primary key(accessionnumber))'"
