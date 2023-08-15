@@ -11,7 +11,7 @@
 - name: Ensure extensions are installed
   hosts: east-node1
   tasks:
-    - name: Create fuzzystrmatch extension
+    - name: Create pg_stat_statements extension
       ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create extension if not exists pg_stat_statements'"
-    - name: Create pg_trgm trigram extension
-      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create extension if not exists pg_stat_monitor'"
+    - name: Create pg_stat_monitor extension
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -d moma_sql -h {{ ansible_host }} -c 'create extension if not exists pg_stat_monitor'"
