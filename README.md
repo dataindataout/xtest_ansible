@@ -21,6 +21,7 @@ After the cluster is running, various scenarios can be run. Current available sc
 
 - Demo of fuzzy matching options in YugabyteDB
 - Demo of snapshot and restore in YugabyteDB
+- Demo of pg_stat_monitor in YugabyteDB
 
 Demos are usually run in order by the leading number on each file. This leaves room for the presenter to discuss with the audience what is happening during each step of the scenario. For example, for the fuzzy matching scenario, you would run the files in this order:
 

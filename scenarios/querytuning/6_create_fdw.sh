@@ -25,3 +25,13 @@ ysqlsh -h "127.0.0.1" -d moma_sql -ec"import foreign schema public limit to (pg_
 ysqlsh -h "127.0.0.1" -d moma_sql -ec"select application_name, client_ip, substr(query, 0, 50), relations, calls from public.pg_stat_monitor where 'public.artists_sql' = any (relations) limit 10"
 ysqlsh -h "127.0.0.1" -d moma_sql -ec"select application_name, client_ip, substr(query, 0, 50), relations, calls from from2.pg_stat_monitor where 'public.artists_sql' = any (relations) limit 10"
 ysqlsh -h "127.0.0.1" -d moma_sql -ec"select application_name, client_ip, substr(query, 0, 50), relations, calls from from3.pg_stat_monitor where 'public.artists_sql' = any (relations) limit 10"
+
+ysqlsh -h "127.0.0.1" -d moma_sql -ec"select application_name, client_ip, query, relations, calls \
+from public.pg_stat_monitor where 'public.artists_sql' = any (relations) \
+union \
+select application_name, client_ip, query, relations, calls \
+from from2.pg_stat_monitor where 'public.artists_sql' = any (relations) \
+union \
+select application_name, client_ip, query, relations, calls \
+from from3.pg_stat_monitor where 'public.artists_sql' = any (relations) \
+order by query, client_ip"
