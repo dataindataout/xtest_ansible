@@ -10,4 +10,4 @@
 --leader_failure_max_missed_heartbeat_periods={{ yb_missed_heartbeat_periods }}
 --ysql_num_shards_per_tserver={{ yb_num_shards_per_tserver }}
 --ysql_log_min_duration_statement={{ yb_log_min_duration_statement }}
---ysql_pg_conf_csv="shared_preload_libraries='pg_stat_monitor'","listen_addresses='*'"
+--ysql_pg_conf_csv="shared_preload_libraries='pg_stat_monitor'","listen_addresses='*'","pg_stat_statements.track='all'","pg_stat_monitor.pgsm_track='all'"

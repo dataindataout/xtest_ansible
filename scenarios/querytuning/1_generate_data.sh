@@ -3,7 +3,7 @@
 
 # Generate a variety of queries on the moma_sql.artists.sql table
 
-for in in {1..1000}
+for in in {1..100}
 do
     type=$((1 + RANDOM % 3))
     host=$((1 + RANDOM % 3))
