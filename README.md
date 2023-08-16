@@ -26,9 +26,9 @@ After the cluster is running, various scenarios can be run. Current available sc
 Demos are usually run in order by the leading number on each file. This leaves room for the presenter to discuss with the audience what is happening during each step of the scenario. For example, for the fuzzy matching scenario, you would run the files in this order:
 
 ```
-scenarios/1_wildcard.sh
-scenarios/2_wildcard.sh
-scenarios/3_wildcard.sh
+scenarios/fuzzy/1_wildcard.sh
+scenarios/fuzzy/2_wildcard.sh
+scenarios/fuzzy/3_wildcard.sh
 ...
 ```
 
