@@ -10,8 +10,10 @@ randid=$((50000001 + RANDOM % (1+500000021-50000001)))
 ysqlsh -h "127.0.0.1" -d moma_sql -f scenarios/querytuning/create_function_trigger.sql
 
 ysqlsh -h "127.0.0.1" -d moma_sql -ec"select pg_stat_statements_reset()"
+ysqlsh -h "127.0.0.1" -d moma_sql -ec"select pg_stat_monitor_reset()"
 
 ysqlsh -h "127.0.0.1" -d moma_sql -ec"insert into artists_sql (artist_id, name) values ($randid, 'Valerie')"
+ysqlsh -h "127.0.0.1" -d moma_sql -d moma_sql -ec"select get_art_artist(854)"
 
-ysqlsh -h "127.0.0.1" -d moma_sql -ec"select query from pg_stat_statements where query like '%insert into artists%'"
-ysqlsh -h "127.0.0.1" -d moma_sql -ec"select bucket_start_time, query from pg_stat_monitor where query like '%insert into artists%'"
+ysqlsh -h "127.0.0.1" -d moma_sql -ec"select query, queryid from pg_stat_statements where query like '%artist%'"
+ysqlsh -h "127.0.0.1" -d moma_sql -ec"select bucket_start_time, query, queryid, top_query, top_queryid from pg_stat_monitor where query like '%artist%'"
