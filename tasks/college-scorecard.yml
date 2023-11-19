@@ -1,0 +1,17 @@
+- name: Ensure data directories on the east side
+  ansible.builtin.import_playbook: os/datadirs_east.yml
+
+- name: Ensure the catalog servers on the east side
+  ansible.builtin.import_playbook: yugabytedb/catalog_east.yml
+
+- name: Ensure the tservers on the east side
+  ansible.builtin.import_playbook: yugabytedb/tservers_east.yml
+
+- name: Ensure the placement policy
+  ansible.builtin.import_playbook: os/placement_east.yml
+
+- name: Ensure the sql table is created
+  ansible.builtin.import_playbook: ddl/sql/stretch/college-scorecard.yml
+
+- name: Ensure data set is available
+  ansible.builtin.import_playbook: dml/datasets/college-scorecard.yml

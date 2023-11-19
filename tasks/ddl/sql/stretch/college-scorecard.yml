@@ -1,0 +1,31 @@
+- name: Check that database is running
+  hosts: east-node1
+  tasks:
+    - name: Check for output from database
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'select version()'"
+      register: dbversion
+      until: "dbversion is not failed"
+      retries: 10
+      delay: 1
+
+- name: Ensure database on east
+  hosts: east-node1
+  tasks:
+    - name: Create database
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create database college_scorecard_sql'"
+      ignore_errors: true
+
+- name: Copy sql files to tmp
+  hosts: east-node1
+  tasks:
+    - name: Copy IPEDS.sql to tmp
+      copy:
+        src: "{{ playbook_dir }}/definitions/college-scorecard/IPEDS.sql"
+        dest: "/tmp/data1/IPEDS.sql"
+
+- name: Ensure tables on east
+  hosts: east-node1
+  tasks:
+    - name: Create institution IPEDS table
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -f /tmp/data1/IPEDS.sql college_scorecard_sql

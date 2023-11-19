@@ -9,11 +9,20 @@ Please note that while some of the snippets within may be useful in a production
 Ansible is used to provision database clusters. Current available options are:
 
 - YugabyteDB 3-node cluster (moma) with two tables (artists and artwork) from the MoMA data set
+- YugabyteDB 3-node cluster (college-scorecard) with tables from the College Scorecard data set
 - YugabyteDB 3-node x 2 xcluster (million) with a million-row generated table
 - PostgreSQL single instance using a million-row generated table
 
 An example command for provisioning a test cluster is:
 `ansible-playbook -i inventory.yml tasks/moma.yml`
+
+## Notes about the College Scorecard IPEDS dataset
+
+IPEDS = Integrated Postsecondary Education Data System
+
+See <https://collegescorecard.ed.gov/assets/InstitutionDataDocumentation.pdf> for the official College Scorecard documentation about the institutional data.
+
+The automation scripts currently just load the data. Scenarios will be added to this dataset.
 
 ## Scenarios
 
