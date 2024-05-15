@@ -13,12 +13,15 @@
   tasks:
     - name: Create database in cql
       ansible.builtin.command: "{{ yb_executable_dir }}/ycqlsh {{ ansible_host }} -e 'create keyspace moma_cql'"
+      ignore_errors: true
 
 - name: Ensure tables on east
   hosts: east-node1
   tasks:
     - name: Create artists table in cql
-      ansible.builtin.command: "{{ yb_executable_dir }}/ycqlsh {{ ansible_host }} -k moma_cql -e 'create table if not exists artists_cql (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text, primary key(artist_id))'"
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ycqlsh {{ ansible_host }} -k moma_cql -e "create table if not exists artists_cql (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text, primary key(artist_id)) WITH transactions = { 'enabled' : true }"
 
     - name: Create artwork table in cql
-      ansible.builtin.command: "{{ yb_executable_dir }}/ycqlsh {{ ansible_host }} -k moma_cql -e 'create table if not exists artwork_cql (title text, artist text, constituentid text, artistbio text, nationality text, begindate text, enddate text, gender text, artworkdate text, medium text, dimensions text, creditline text, accessionnumber text, classification text, department text, dateacquired date, cataloged text, objectid int, url text, thumbnailurl text, circumferencecm decimal, depthcm decimal, diametercm decimal, heightcm decimal, lengthcm decimal, weightkg decimal, widthcm decimal, seatheightcm decimal, durationsec decimal, primary key(accessionnumber))'"
+      ansible.builtin.command: >
+        {{ yb_executable_dir }}/ycqlsh {{ ansible_host }} -k moma_cql -e "create table if not exists artwork_cql (title text, artist text, constituentid text, artistbio text, nationality text, begindate text, enddate text, gender text, artworkdate text, medium text, dimensions text, creditline text, accessionnumber text, classification text, department text, dateacquired date, cataloged text, objectid int, url text, thumbnailurl text, onview text, circumferencecm decimal, depthcm decimal, diametercm decimal, heightcm decimal, lengthcm decimal, weightkg decimal, widthcm decimal, seatheightcm decimal, durationsec decimal, primary key(accessionnumber)) WITH transactions = { 'enabled' : true }"

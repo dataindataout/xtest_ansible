@@ -11,8 +11,9 @@
 - name: Ensure database on east
   hosts: east-node1
   tasks:
-    - name: Create table
+    - name: Create database
       ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -c 'create database moma_sql'"
+      ignore_errors: true
 
 - name: Ensure tables on east
   hosts: east-node1
@@ -21,4 +22,4 @@
       ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d moma_sql -c 'create table if not exists artists_sql (artist_id int, name text, extra1 text, nationality text, gender text, birth_year int, death_year int, extra2 text, extra3 text, primary key(artist_id))'"
 
     - name: Create artwork table
-      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d moma_sql -c 'create table if not exists artwork_sql (title text, artist text, constituentid text, artistbio text, nationality text, begindate text, enddate text, gender text, artworkdate text, medium text, dimensions text, creditline text, accessionnumber text, classification text, department text, dateacquired date, cataloged text, objectid int, url text, thumbnailurl text, circumferencecm decimal, depthcm decimal, diametercm decimal, heightcm decimal, lengthcm decimal, weightkg decimal, widthcm decimal, seatheightcm decimal, durationsec decimal, primary key(accessionnumber))'"
+      ansible.builtin.command: "{{ yb_executable_dir }}/ysqlsh -h {{ ansible_host }} -d moma_sql -c 'create table if not exists artwork_sql (title text, artist text, constituentid text, artistbio text, nationality text, begindate text, enddate text, gender text, artworkdate text, medium text, dimensions text, creditline text, accessionnumber text, classification text, department text, dateacquired date, cataloged text, objectid int, url text, thumbnailurl text, onview text, circumferencecm decimal, depthcm decimal, diametercm decimal, heightcm decimal, lengthcm decimal, weightkg decimal, widthcm decimal, seatheightcm decimal, durationsec decimal, primary key(accessionnumber))'"
