@@ -1,4 +1,4 @@
-yb_executable_dir: /opt/yugabyte-2.18.0.0/bin
+yb_executable_dir: /opt/yugabyte-2.20.3.1/bin
 dsbulk_executable_dir: /usr/local/bin
 yb_missed_heartbeat_periods: 10
 yb_num_shards_per_tserver: 1
